@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Coming Soon</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=Bebas+Neue&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#0e1219;--neon:#00f5d4;--neon2:#7c3aed;
+    --text:#e2e8f8;--muted:#6b7899;--border:rgba(255,255,255,0.09);
+  }
+  * { box-sizing:border-box;margin:0;padding:0; }
+  body {
+    font-family:'Space Grotesk',sans-serif;
+    background:var(--bg);color:var(--text);
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    text-align:center;
+  }
+  body::before {
+    content:'';position:fixed;inset:0;
+    background-image:linear-gradient(rgba(0,245,212,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,212,0.025) 1px,transparent 1px);
+    background-size:60px 60px;pointer-events:none;z-index:0;
+  }
+  .box { position:relative;z-index:1;padding:2rem; }
+  .tag {
+    font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2.5px;
+    text-transform:uppercase;color:var(--neon);margin-bottom:16px;
+    display:flex;align-items:center;justify-content:center;gap:8px;
+  }
+  .tag::before,.tag::after{content:'';width:30px;height:1px;background:var(--neon);}
+  h1 {
+    font-family:'Bebas Neue',sans-serif;font-size:4rem;letter-spacing:4px;
+    background:linear-gradient(135deg,#fff 0%,var(--neon) 60%,var(--neon2) 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    margin-bottom:12px;
+  }
+  p { color:var(--muted);font-size:0.9rem;margin-bottom:2rem; }
+  .back-btn {
+    font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.5px;
+    text-transform:uppercase;color:var(--neon);
+    border:1px solid rgba(0,245,212,0.3);background:rgba(0,245,212,0.05);
+    padding:10px 24px;border-radius:8px;cursor:pointer;
+    text-decoration:none;display:inline-block;transition:all 0.2s;
+  }
+  .back-btn:hover{background:rgba(0,245,212,0.1);border-color:rgba(0,245,212,0.6);}
+</style>
+</head>
+<body>
+  <div class="box">
+    <div class="tag">Lesson Notes</div>
+    <h1>Coming Soon</h1>
+    <p>This unit's interactive notes are being prepared.<br>Check back soon!</p>
+    <a class="back-btn" onclick="history.back()">← Go Back</a>
+  </div>
+</body>
+</html>

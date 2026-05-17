@@ -1,17 +1,137 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
 
+const subjects = [
+  { id: 'pure01',       label: 'Pure 01',       code: 'P1', color: 'neon',  desc: 'Algebraic Methods, Graphs and Transformations, Differentiation' },
+  { id: 'pure02',       label: 'Pure 02',       code: 'P2', color: 'neon2', desc: 'Exponentials, Binomial Distribution, Sequence and Series' },
+  { id: 'pure03',       label: 'Pure 03',       code: 'P3', color: 'neon4', desc: 'Functions and Graphs, Trigonometry, Numerical Methods' },
+  { id: 'pure04',       label: 'Pure 04',       code: 'P4', color: 'neon5', desc: 'Proof, Partial Fractions, Vectors' },
+  { id: 'statistics01', label: 'Statistics 01', code: 'S1', color: 'neon3', desc: 'Probability, Correlation, Normal Distribution' },
+  { id: 'mechanics01', label: 'Mechanics 01', code: 'M1', color: 'gold', desc: 'Dynamics of a Moving Particle, Forces and Friction, Momentum' }
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="IAL Maths — Nipun Viraj">
+<style>
+  .hero {
+    max-width: 860px; margin: 0 auto;
+    padding: 5rem 2rem 3rem;
+    text-align: center;
+  }
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--neon); margin-bottom: 16px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .hero-tag::before,.hero-tag::after { content:''; width:40px;height:1px;background:var(--neon); }
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 6rem);
+    letter-spacing: 4px; line-height: 1;
+    background: linear-gradient(135deg, #fff 0%, var(--neon) 55%, var(--neon2) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 16px;
+  }
+  .hero p {
+    font-size: 0.95rem; color: var(--muted); max-width: 480px;
+    margin: 0 auto 3rem; font-weight: 300;
+  }
+
+  .subjects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    max-width: 900px; margin: 0 auto;
+    padding: 0 2rem 5rem;
+  }
+
+  .subject-btn {
+    display: block; text-decoration: none;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem 1.8rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
+    position: relative; overflow: hidden;
+    text-align: left;
+    animation: card-in 0.5s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  .subject-btn::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--btn-color), transparent);
+    opacity: 0.6; transition: opacity 0.3s;
+  }
+  .subject-btn::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at top left, rgba(var(--btn-rgb),0.06), transparent 60%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .subject-btn:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.14); }
+  .subject-btn:hover::after { opacity: 1; }
+  .subject-btn:hover::before { opacity: 1; }
+
+  /* color variants */
+  .subject-btn.neon  { --btn-color:var(--neon);  --btn-rgb:0,245,212; }
+  .subject-btn.neon2 { --btn-color:var(--neon2); --btn-rgb:124,58,237; }
+  .subject-btn.neon4 { --btn-color:var(--neon4); --btn-rgb:58,134,255; }
+  .subject-btn.neon5 { --btn-color:var(--neon5); --btn-rgb:251,133,0; }
+  .subject-btn.neon3 { --btn-color:var(--neon3); --btn-rgb:247,37,133; }
+  .subject-btn.gold  { --btn-color:#fbbf24;       --btn-rgb:251,191,36; }
+
+  .btn-code {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--btn-color); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .btn-code::before { content:''; width:14px;height:1px;background:var(--btn-color); }
+
+  .btn-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem; letter-spacing: 3px;
+    color: var(--text); line-height: 1; margin-bottom: 10px;
+  }
+  .btn-desc {
+    font-size: 0.8rem; color: var(--muted); line-height: 1.5; font-weight: 300;
+  }
+  .btn-arrow {
+    position: absolute; bottom: 1.5rem; right: 1.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 18px; color: var(--btn-color); opacity: 0.4;
+    transition: all 0.3s;
+  }
+  .subject-btn:hover .btn-arrow { opacity: 1; transform: translate(3px,-3px); }
+
+  @keyframes card-in {
+    from { opacity:0; transform:translateY(20px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  .subject-btn:nth-child(1){animation-delay:0.05s}
+  .subject-btn:nth-child(2){animation-delay:0.10s}
+  .subject-btn:nth-child(3){animation-delay:0.15s}
+  .subject-btn:nth-child(4){animation-delay:0.20s}
+  .subject-btn:nth-child(5){animation-delay:0.25s}
+  .subject-btn:nth-child(6){animation-delay:0.30s}
+</style>
+
+<section class="hero">
+  <div class="hero-tag">Edexcel International A Level</div>
+  <h1>Interactive<br>Maths Notes</h1>
+  <p>Step-by-step lessons, worked examples, and past paper questions — all in one place.</p>
+</section>
+
+<div class="subjects-grid">
+  {subjects.map(s => (
+    <a href={`/subject/${s.id}`} class={`subject-btn ${s.color}`}>
+      <div class="btn-code">{s.code}</div>
+      <div class="btn-label">{s.label}</div>
+      <div class="btn-desc">{s.desc}</div>
+      <span class="btn-arrow">↗</span>
+    </a>
+  ))}
+</div>
+</BaseLayout>

@@ -1,0 +1,167 @@
+---
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const subject = {
+  code:  'M1',
+  label: 'Mechanics 01',
+  color: 'neon4',
+  desc:  'Dynamics of Particles in Motion, Forces and Friction, Momentum and Impulse and more',
+  rgb:   '58,134,255',
+};
+
+const units = [
+  { num: '01', title: 'Mathematical Model in Mechanics',     status: 'coming',   file: '/lessons/pure03-l01.html' },
+  { num: '02', title: 'Constant Acceleration',                status: 'coming', file: '/lessons/placeholder.html' },
+  { num: '03', title: 'Vectors in Mechanics',        status: 'coming', file: '/lessons/placeholder.html' },
+  { num: '04', title: 'Dynamics of a Particle Moving in a Straight Line',      status: 'coming', file: '/lessons/placeholder.html' },
+  { num: '05', title: 'Forces and Friction',       status: 'coming', file: '/lessons/placeholder.html' },
+  { num: '06', title: 'Momentum and Impulse',                  status: 'coming', file: '/lessons/placeholder.html' },
+  { num: '07', title: 'Statics of a Particle',  status: 'coming', file: '/lessons/placeholder.html' },
+  { num: '08', title: 'Moments', status: 'coming', file: '/lessons/placeholder.html' },
+];
+---
+
+<BaseLayout title={`${subject.label} — IAL Maths`}>
+<style>
+  .page { max-width: 900px; margin: 0 auto; padding: 3.5rem 2rem 5rem; }
+
+  .breadcrumb {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .breadcrumb a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  .breadcrumb a:hover { color: var(--neon4); }
+  .breadcrumb span { color: var(--dim); }
+
+  .subject-header {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .subject-header::after {
+    content:'';position:absolute;bottom:0;left:0;width:80px;height:1px;
+    background: var(--neon4);
+  }
+  .subject-code {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--neon4); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .subject-code::before { content:''; width:16px;height:1px;background:var(--neon4); }
+  .subject-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem,6vw,4rem); letter-spacing: 4px;
+    background: linear-gradient(135deg, #fff 0%, var(--neon4) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 8px;
+  }
+  .subject-desc { font-size: 0.88rem; color: var(--muted); font-weight: 300; }
+
+  .units-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 14px;
+  }
+
+  .unit-card {
+    display: block; text-decoration: none;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.5rem;
+    position: relative; overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.22,1,0.36,1);
+    animation: card-in 0.4s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  .unit-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--neon4), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .unit-card.done:hover { transform: translateY(-3px); border-color: rgba(58,134,255,0.3); }
+  .unit-card.done:hover::before { opacity: 0.7; }
+  .unit-card.coming { opacity: 0.5; cursor: default; }
+
+  .unit-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--neon4); margin-bottom: 8px;
+  }
+  .unit-card.coming .unit-num { color: var(--muted); }
+
+  .unit-title {
+    font-size: 0.95rem; font-weight: 600; color: var(--text);
+    margin-bottom: 12px; line-height: 1.3;
+  }
+
+  .unit-status {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 3px 10px; border-radius: 20px;
+  }
+  .unit-status.done {
+    color: var(--neon); background: rgba(0,245,212,0.06);
+    border: 1px solid rgba(0,245,212,0.2);
+  }
+  .unit-status.coming {
+    color: var(--muted); background: var(--bg3);
+    border: 1px solid var(--border);
+  }
+  .unit-status.done::before  { content: '●'; font-size: 6px; }
+  .unit-status.coming::before{ content: '○'; font-size: 6px; }
+
+  .unit-arrow {
+    position: absolute; bottom: 1.2rem; right: 1.2rem;
+    font-size: 16px; color: var(--neon4); opacity: 0;
+    transition: all 0.3s;
+  }
+  .unit-card.done:hover .unit-arrow { opacity: 1; transform: translate(2px,-2px); }
+
+  @keyframes card-in {
+    from { opacity:0; transform:translateY(16px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+</style>
+
+<div class="page">
+
+  <div class="breadcrumb">
+    <a href="/">Home</a>
+    <span>/</span>
+    <span>{subject.label}</span>
+  </div>
+
+  <div class="subject-header">
+    <div class="subject-code">{subject.code} · Edexcel IAL</div>
+    <div class="subject-title">{subject.label}</div>
+    <p class="subject-desc">{subject.desc}</p>
+  </div>
+
+  <div class="units-grid">
+    {units.map((unit, i) => (
+      <a
+        href={unit.file}
+        target="_blank"
+        rel="noopener"
+        class={`unit-card ${unit.status}`}
+        style={`animation-delay:${i * 0.05}s`}
+      >
+        <div class="unit-num">Unit {unit.num}</div>
+        <div class="unit-title">{unit.title}</div>
+        <span class={`unit-status ${unit.status}`}>
+          {unit.status === 'done' ? 'Available' : 'Coming Soon'}
+        </span>
+        {unit.status === 'done' && <span class="unit-arrow">↗</span>}
+      </a>
+    ))}
+  </div>
+
+</div>
+</BaseLayout>

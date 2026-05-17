@@ -1,0 +1,122 @@
+---
+const { title = "IAL Maths" } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <link rel="stylesheet" href="/src/styles/global.css" />
+  <style>
+    /* ── ORBS ── */
+    .orb {
+      position: fixed; border-radius: 50%;
+      filter: blur(80px); pointer-events: none; z-index: 0;
+      animation: float-orb 12s ease-in-out infinite;
+    }
+    .orb1 { width:400px;height:400px;background:radial-gradient(circle,rgba(0,245,212,0.07),transparent 70%);top:-100px;right:-100px;animation-delay:0s; }
+    .orb2 { width:350px;height:350px;background:radial-gradient(circle,rgba(124,58,237,0.06),transparent 70%);bottom:-50px;left:-80px;animation-delay:-4s; }
+    .orb3 { width:250px;height:250px;background:radial-gradient(circle,rgba(247,37,133,0.05),transparent 70%);top:50%;left:60%;animation-delay:-8s; }
+    @keyframes float-orb {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33%      { transform: translate(-30px,20px) scale(1.05); }
+      66%      { transform: translate(20px,-25px) scale(0.95); }
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(14,18,25,0.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      height: 62px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2.5rem;
+      position: relative;
+    }
+    header::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--neon), transparent);
+      opacity: 0.35;
+    }
+    .header-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem; letter-spacing: 3px;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .header-logo span { color: var(--neon); }
+    .header-nav { display: flex; align-items: center; gap: 10px; }
+    .nav-link {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      padding: 5px 12px; border-radius: 6px;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--neon);
+      border-color: rgba(0,245,212,0.25);
+      background: rgba(0,245,212,0.05);
+    }
+
+    /* ── MAIN ── */
+    main { position: relative; z-index: 10; }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 10;
+      border-top: 1px solid var(--border);
+      padding: 2.5rem;
+      text-align: center;
+      margin-top: 4rem;
+    }
+    footer::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--neon2), transparent);
+      opacity: 0.3;
+    }
+    .footer-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem; letter-spacing: 5px;
+      background: linear-gradient(135deg, #fff 0%, var(--neon) 60%, var(--neon2) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
+    }
+    .footer-sub {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .footer-sub span { color: var(--neon); }
+  </style>
+</head>
+<body>
+
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <header>
+    <a href="/" class="header-logo">IAL <span>Maths</span></a>
+    <nav class="header-nav">
+      <a href="/" class="nav-link">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer>
+    <div class="footer-name">NIPUN VIRAJ</div>
+    <div class="footer-sub">BSc. Hons Engineering · University of Moratuwa · <span>071 879 5359</span></div>
+  </footer>
+
+</body>
+</html>
